@@ -1,3 +1,4 @@
+from tkinter import N
 import pygame
 from grid import Grid
 
@@ -39,7 +40,15 @@ def main(win, width):
                     spot.make_barrier()
 
             elif pygame.mouse.get_pressed()[2]: # rigth mouse button
-                pass
+                pos = pygame.mouse.get_pos()
+                row, col = Grid.get_clicked_pos(pos, ROWS, width)
+                spot = grid[row][col]
+                spot.reset_color()
+
+                if start is not None and spot.get_pos() == start.get_pos():
+                    start = None
+                elif end is not None and spot.get_pos() == end.get_pos():
+                    end = None
     pygame.quit()
 
 
