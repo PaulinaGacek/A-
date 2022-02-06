@@ -6,4 +6,4 @@ class Color():
     tea_green = (198, 236, 174)
     black = (0,0,0)
     yellow = (255,236,174)
-    white = (255,236,230)
+    white = (240,250,255)
