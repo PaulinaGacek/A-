@@ -11,7 +11,7 @@ WIN = pygame.display.set_mode((WIDTH, WIDTH + 50))
 def main(win, width):
 	ROWS = 50
 	grid = Grid.make_grid(ROWS, width)
-	ButtonHandler.initialise_list()
+	ButtonHandler.initialise_list(win,width)
 
 	start = None
 	end = None
@@ -41,7 +41,9 @@ def main(win, width):
 						spot.make_barrier()
 
 				else: #button check
-					b = Button("pierwszy") 
+					print("poza")
+					y, x = pos
+					ButtonHandler.click_proper_button(x,y)
 
 			elif pygame.mouse.get_pressed()[2]: # RIGHT
 				pos = pygame.mouse.get_pos()
