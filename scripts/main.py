@@ -1,55 +1,64 @@
 from tkinter import N
 import pygame
 from grid import Grid
+from algorithm import Algorithm
+from utils import loadParameters
 
-WIDTH = 400
+WIDTH, ALGORITHM, HEURISTICS = loadParameters()
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
 
 def main(win, width):
-    pygame.display.set_caption("A*")
-    
-    ROWS = 50
-    grid = Grid.make_grid(ROWS, width)
+	ROWS = 50
+	grid = Grid.make_grid(ROWS, width)
 
-    start = None
-    run = True
-    end = None
-    started = False
+	start = None
+	end = None
 
-    while run:
-        Grid.draw(win, grid, ROWS, width)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-                break
-            if started: # when algorithm started user cannot click
-                continue
-            if pygame.mouse.get_pressed()[0]: # left mouse button
-                pos = pygame.mouse.get_pos()
-                row, col = Grid.get_clicked_pos(pos, ROWS, width)
-                spot = grid[row][col]
+	run = True
+	while run:
+		Grid.draw(win, grid, ROWS, width)
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				run = False
 
-                if start is None:
-                    start = spot
-                    start.make_start()
-                elif end is None:
-                    if spot.get_pos() != start.get_pos():
-                        end = spot
-                        end.make_end()
-                elif spot.get_pos() != end.get_pos() and spot.get_pos() != start.get_pos():
-                    spot.make_barrier()
+			if pygame.mouse.get_pressed()[0]: # LEFT
+				pos = pygame.mouse.get_pos()
+				row, col = Grid.get_clicked_pos(pos, ROWS, width)
+				spot = grid[row][col]
+				if not start and spot != end:
+					start = spot
+					start.make_start()
 
-            elif pygame.mouse.get_pressed()[2]: # rigth mouse button
-                pos = pygame.mouse.get_pos()
-                row, col = Grid.get_clicked_pos(pos, ROWS, width)
-                spot = grid[row][col]
-                spot.reset_color()
+				elif not end and spot != start:
+					end = spot
+					end.make_end()
 
-                if start is not None and spot.get_pos() == start.get_pos():
-                    start = None
-                elif end is not None and spot.get_pos() == end.get_pos():
-                    end = None
-    pygame.quit()
+				elif spot != end and spot != start:
+					spot.make_barrier()
 
+			elif pygame.mouse.get_pressed()[2]: # RIGHT
+				pos = pygame.mouse.get_pos()
+				row, col = Grid.get_clicked_pos(pos, ROWS, width)
+				spot = grid[row][col]
+				spot.reset()
+				if spot == start:
+					start = None
+				elif spot == end:
+					end = None
+
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_SPACE and start and end:
+					for row in grid:
+						for spot in row:
+							spot.update_neighbours(grid)
+
+					Algorithm.a_star(lambda: Grid.draw(win, grid, ROWS, width), grid, start, end)
+
+				if event.key == pygame.K_c:
+					start = None
+					end = None
+					grid = Grid.make_grid(ROWS, width)
+
+	pygame.quit()
 
 main(WIN, WIDTH)
