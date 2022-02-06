@@ -30,7 +30,7 @@ class Spot:
     def is_end(self):
         return self.color == Color.dark_green
     
-    def reset_color(self):
+    def reset(self):
         self.color = Color.white
     
     def make_closed(self):

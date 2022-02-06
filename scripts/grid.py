@@ -27,6 +27,14 @@ class Grid:
             for spot in row:
                 spot.draw(win)
         Grid.draw_grid(win, rows, width)
+        # pygame.display.update()
+    
+    def draw_path(win, grid, rows, width):
+        win.fill(Color.white)
+        for row in grid:
+            for spot in row:
+                spot.draw(win)
+        Grid.draw_grid(win, rows, width)
         pygame.display.update()
     
     def get_clicked_pos(pos, rows, width):
