@@ -26,7 +26,7 @@ class Heuristics:
         x1, y1 = p1.get_pos()
         x2, y2 = p2.get_pos()
         
-        if self.name == "manhattan":
+        if self.name == "manhattan ":
             return Heuristics.manhattan(x1,x2,y1,y2)
         
         if self.name == "euclidean":

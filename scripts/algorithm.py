@@ -3,8 +3,8 @@ from heuristics import Heuristics
 import pygame
 class Algorithm:
 
-    def a_star(draw, grid, start, end):
-        heuristic = Heuristics("diagonal")
+    def a_star(draw, grid, start, end, heuristic: str):
+        heuristic = Heuristics(heuristic)
         count = 0
         open_set = PriorityQueue()
         open_set.put((0, count, start))

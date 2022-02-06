@@ -12,6 +12,7 @@ def main(win, width):
 	ROWS = 50
 	grid = Grid.make_grid(ROWS, width)
 	ButtonHandler.initialise_list(win,width)
+	heuristic = "manhattan "
 
 	start = None
 	end = None
@@ -26,7 +27,6 @@ def main(win, width):
 			if pygame.mouse.get_pressed()[0]: # LEFT
 				pos = pygame.mouse.get_pos()
 				row, col = Grid.get_clicked_pos(pos, ROWS, width)
-				print(row, col)
 				if row < ROWS and col < ROWS:
 					spot = grid[row][col]
 					if not start and spot != end:
@@ -41,9 +41,10 @@ def main(win, width):
 						spot.make_barrier()
 
 				else: #button check
-					print("poza")
 					y, x = pos
-					ButtonHandler.click_proper_button(x,y)
+					h = ButtonHandler.click_proper_button(x,y)
+					if h is not None:
+						heuristic = h
 
 			elif pygame.mouse.get_pressed()[2]: # RIGHT
 				pos = pygame.mouse.get_pos()
@@ -62,7 +63,7 @@ def main(win, width):
 						for spot in row:
 							spot.update_neighbours(grid)
 
-					Algorithm.a_star(lambda: Grid.draw_path(win, grid, ROWS, width), grid, start, end)
+					Algorithm.a_star(lambda: Grid.draw_path(win, grid, ROWS, width), grid, start, end, heuristic)
 
 				if event.key == pygame.K_c:
 					start = None

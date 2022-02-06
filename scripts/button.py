@@ -10,8 +10,13 @@ class Button:
         self.start_x = start_x
         self.start_y = start_y
         self.name = name
-        self.pushed = False
-        self.color = Color.violet
+        
+        if name != "manhattan ":
+            self.color = Color.violet
+            self.pushed = False
+        else:
+            self.color = Color.orange
+            self.pushed = True
     
     def is_inside(self, y_pos, x_pos):
         if x_pos < self.start_x or x_pos > self.start_x + self.size_y:
@@ -68,4 +73,5 @@ class ButtonHandler:
                 for other_button in ButtonHandler.button_list:
                     other_button.pushed = False
                 button.pushed = True
-                break
+                return button.name
+        return None
