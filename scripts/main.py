@@ -59,10 +59,11 @@ def main(win, width):
 
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE and start and end:
+					Grid.clear_old_path(win, grid, ROWS, width)
 					for row in grid:
 						for spot in row:
 							spot.update_neighbours(grid)
-
+					
 					Algorithm.a_star(lambda: Grid.draw_path(win, grid, ROWS, width), grid, start, end, heuristic)
 
 				if event.key == pygame.K_c:

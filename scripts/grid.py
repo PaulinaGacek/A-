@@ -37,6 +37,18 @@ class Grid:
         Grid.draw_grid(win, rows, width)
         pygame.display.update()
     
+    def clear_old_path(win, grid, rows, width):
+        #TO DO:
+        # clears only spots which are not boundaries, start, end
+        win.fill(Color.white)
+        for row in grid:
+            for spot in row:
+                if spot.is_closed() or spot.is_open() or spot.is_path():
+                    spot.reset()
+                    spot.draw(win)
+        Grid.draw_grid(win, rows, width)
+        pygame.display.update()
+    
     def get_clicked_pos(pos, rows, width):
         gap = width // rows
         y, x = pos

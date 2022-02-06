@@ -30,7 +30,6 @@ class Heuristics:
             return Heuristics.manhattan(x1,x2,y1,y2)
         
         if self.name == "euclidean":
-            print("euclidean")
             return Heuristics.euclidean(x1,x2,y1,y2)
         
         else:

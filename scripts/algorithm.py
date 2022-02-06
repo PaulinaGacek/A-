@@ -50,5 +50,6 @@ class Algorithm:
     def reconstruct_path(came_from, current, draw):
         while current in came_from:
             current = came_from[current]
-            current.make_path()
-            draw()
+            if not current.is_start():
+                current.make_path()
+                draw()
