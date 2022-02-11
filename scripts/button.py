@@ -2,6 +2,7 @@ import pygame
 from colors import Color
 
 class Button:
+    """Representation of button displayed under the grid.""" 
 
     def __init__(self, name, start_x, start_y) -> None:
         self.size_x = 30
@@ -16,6 +17,7 @@ class Button:
             self.color = Color.orange
     
     def is_inside(self, y_pos, x_pos):
+        """Checks if the point with given coefficients is within the button."""
         if x_pos < self.start_x or x_pos > self.start_x + self.size_y:
             return False
         if y_pos < self.start_y or y_pos > self.start_y + self.size_x:
@@ -23,6 +25,7 @@ class Button:
         return True
     
     def draw(self, win):
+        """Draws square button with a name of certain heuristic."""
         pygame.init()
         pygame.draw.rect(win,self.color,[self.start_x,self.start_y, self.size_y, self.size_x])
 
@@ -32,12 +35,15 @@ class Button:
         win.blit(text, (self.start_x + 12, self.start_y + 5))
     
     def is_pushed(self):
+        """Checks if button is pushed."""
         return self.color == Color.orange
     
     def set_pushed(self):
+        """Set button as pushed."""
         self.color = Color.orange
     
     def set_not_pushed(self):
+        """Set button as not pushed."""
         self.color = Color.violet
     
     def get_name(self):
@@ -45,6 +51,7 @@ class Button:
 
 
 class ButtonHandler:
+    """Manages all buttons and guarantees that exacly one button is pushed."""
     b1 = None
     b2 = None
     b3 = None
@@ -52,6 +59,7 @@ class ButtonHandler:
 
     @staticmethod
     def initialise_list(width):
+        """Initialises button_list variable with all button objects."""
         ButtonHandler.b1 = Button("manhattan ",20, width+10)
         ButtonHandler.b2 = Button("euclidean",160, width+10)
         ButtonHandler.b3 = Button("diagonal", 290, width+10) 
@@ -61,12 +69,13 @@ class ButtonHandler:
     
     @staticmethod
     def draw_all_buttons(win):
-        ButtonHandler.b1.draw(win)
-        ButtonHandler.b2.draw(win)
-        ButtonHandler.b3.draw(win)
+        """Draws all buttons from list."""
+        for button in ButtonHandler.button_list:
+            button.draw(win)
     
     @staticmethod
     def click_proper_button(x_pos, y_pos):
+        """Sets button as pushed if given coefficients are within the button."""
         for button in ButtonHandler.button_list:
             if button.is_inside(x_pos, y_pos):
                 for other_button in ButtonHandler.button_list:

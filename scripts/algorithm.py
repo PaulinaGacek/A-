@@ -2,6 +2,7 @@ from queue import PriorityQueue
 from heuristics import Heuristics
 import pygame
 class Algorithm:
+    """Representation of the algorithm used by programme."""
 
     def a_star(draw, grid, start, end, heuristic: str):
         heuristic = Heuristics(heuristic)
@@ -27,7 +28,7 @@ class Algorithm:
             if current.get_pos() == end.get_pos():
                 Algorithm.reconstruct_path(came_from, end, draw)
                 end.make_end()
-                return True
+                break
 
             for neighbor in current.neighbours:
                 temp_g_score = g_score[current] + 1
@@ -45,9 +46,9 @@ class Algorithm:
             draw()
             if current != start:
                 current.make_closed()
-        return False
 
     def reconstruct_path(came_from, current, draw):
+        """Draws the path from start to the end point."""
         while current in came_from:
             current = came_from[current]
             if not current.is_start():
