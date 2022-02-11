@@ -1,6 +1,7 @@
 from queue import PriorityQueue
 from heuristics import Heuristics
 import pygame
+
 class Algorithm:
     """Representation of the algorithm used by programme."""
 

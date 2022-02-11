@@ -5,6 +5,8 @@ from utils import loadParameters
 from button import ButtonHandler
 
 def main(win, width, rows, heuristic):
+	"""Main function of the programme."""
+
 	grid = Grid.make_grid(rows, width)
 	ButtonHandler.initialise_list(width)
 
@@ -55,7 +57,7 @@ def main(win, width, rows, heuristic):
 
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE and start and end:
-					Grid.clear_old_path(win, grid, rows, width)
+					Grid.clear_old_grid(win, grid, rows, width)
 					for row in grid:
 						for spot in row:
 							spot.update_neighbours(grid)

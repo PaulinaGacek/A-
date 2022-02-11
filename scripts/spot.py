@@ -3,6 +3,7 @@ import pygame
 
 class Spot:
     """Representation of the pixel on a grid."""
+    
     def __init__(self, row, col, width, total_rows) -> None:
         self.row = row
         self.col = col

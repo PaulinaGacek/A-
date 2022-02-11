@@ -1,4 +1,5 @@
 class Color():
+    """Colors palette of the programme."""
     orange = (213,87,59)
     auburn = (136,80,86)
     violet = (119,125,167)

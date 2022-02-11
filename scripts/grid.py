@@ -3,33 +3,37 @@ from colors import Color
 import pygame
 
 class Grid:
+    """Representation of squre grid on which visualisation happens."""
 
-    def make_grid(rows, width):
+    def make_grid(rows, width) -> list(list()):
+        """Returns the grid initialised with spot objects."""
         grid = []
         gap = width // rows
-        for i in range(rows):
+        for row_idx in range(rows):
             grid.append([])
-            for j in range(rows):
-                spot = Spot(i, j, gap, rows)
-                grid[i].append(spot)
+            for col_idx in range(rows):
+                spot = Spot(row_idx, col_idx, gap, rows)
+                grid[row_idx].append(spot)
         return grid
 
     def draw_grid(win, rows, width):
+        """Draws square grid."""
         gap = width // rows
-        for i in range(rows):
-            pygame.draw.line(win, Color.violet, (0, i*gap), (width, i*gap))
-            for j in range(rows):
-                pygame.draw.line(win, Color.violet, (j*gap, 0), (j*gap, width))
+        for row_idx in range(rows):
+            pygame.draw.line(win, Color.violet, (0, row_idx*gap), (width, row_idx*gap))
+            for col_idx in range(rows):
+                pygame.draw.line(win, Color.violet, (col_idx*gap, 0), (col_idx*gap, width))
     
     def draw(win, grid, rows, width):
+        """Draws square grid with colored spots."""
         win.fill(Color.white)
         for row in grid:
             for spot in row:
                 spot.draw(win)
         Grid.draw_grid(win, rows, width)
-        # pygame.display.update()
     
     def draw_path(win, grid, rows, width):
+        """Draws calculated path from start to end."""
         win.fill(Color.white)
         for row in grid:
             for spot in row:
@@ -37,9 +41,8 @@ class Grid:
         Grid.draw_grid(win, rows, width)
         pygame.display.update()
     
-    def clear_old_path(win, grid, rows, width):
-        #TO DO:
-        # clears only spots which are not boundaries, start, end
+    def clear_old_grid(win, grid, rows, width):
+        """Erases all spots colored as an output of calculations."""
         win.fill(Color.white)
         for row in grid:
             for spot in row:
@@ -49,7 +52,8 @@ class Grid:
         Grid.draw_grid(win, rows, width)
         pygame.display.update()
     
-    def get_clicked_pos(pos, rows, width):
+    def get_clicked_pos(pos, rows, width) -> tuple():
+        """Returns row and columns idx of clicked place."""
         gap = width // rows
         y, x = pos
 
