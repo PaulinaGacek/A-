@@ -34,11 +34,11 @@ The user can set start and end points as well as create barriers by themselves b
 
 After running the programme as explained above you can choose the heuristic from listed below:
 
-    :star: manhattan
+:star: manhattan
 
-    :star: euclidean
+:star: euclidean
 
-    :star: diagonal
+:star: diagonal
 
 by clicking on the button with proper name. Currently pushed button is displayed as the orange one, whereas others are violet.
 
