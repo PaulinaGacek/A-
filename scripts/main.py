@@ -6,7 +6,7 @@ from button import ButtonHandler
 
 def main(win, width, rows, heuristic):
 	grid = Grid.make_grid(rows, width)
-	ButtonHandler.initialise_list(win,width)
+	ButtonHandler.initialise_list(width)
 
 	start = None
 	end = None
@@ -66,7 +66,7 @@ def main(win, width, rows, heuristic):
 					start = None
 					end = None
 					grid = Grid.make_grid(rows, width)
-		ButtonHandler.draw_all_buttons(win,width)
+		ButtonHandler.draw_all_buttons(win)
 		pygame.display.update()
 	pygame.quit()
 

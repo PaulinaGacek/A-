@@ -8,4 +8,4 @@ def loadParameters():
     rows = data['rows']
     heuristic = data['heuristic']
     f.close()
-    return width, heuristic
+    return width, rows, heuristic
