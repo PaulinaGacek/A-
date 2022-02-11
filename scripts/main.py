@@ -1,33 +1,29 @@
-from tkinter import N
 import pygame
 from grid import Grid
 from algorithm import Algorithm
 from utils import loadParameters
-from button import Button, ButtonHandler
+from button import ButtonHandler
 
-WIDTH, ALGORITHM, HEURISTICS = loadParameters()
-WIN = pygame.display.set_mode((WIDTH, WIDTH + 50))
-
-def main(win, width):
-	ROWS = 50
-	grid = Grid.make_grid(ROWS, width)
+def main(win, width, rows, heuristic):
+	grid = Grid.make_grid(rows, width)
 	ButtonHandler.initialise_list(win,width)
-	heuristic = "manhattan "
 
 	start = None
 	end = None
 
 	run = True
 	while run:
-		Grid.draw(win, grid, ROWS, width)
+		Grid.draw(win, grid, rows, width)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				run = False
 
 			if pygame.mouse.get_pressed()[0]: # LEFT
 				pos = pygame.mouse.get_pos()
-				row, col = Grid.get_clicked_pos(pos, ROWS, width)
-				if row < ROWS and col < ROWS:
+				row, col = Grid.get_clicked_pos(pos, rows, width)
+
+				# if pos is within the grid
+				if row < rows and col < rows:
 					spot = grid[row][col]
 					if not start and spot != end:
 						start = spot
@@ -40,16 +36,16 @@ def main(win, width):
 					elif spot != end and spot != start:
 						spot.make_barrier()
 
-				else: #button check
+				else: # check pushing button
 					y, x = pos
 					h = ButtonHandler.click_proper_button(x,y)
-					if h is not None:
+					if h is not None: # button was pushed
 						heuristic = h
 
 			elif pygame.mouse.get_pressed()[2]: # RIGHT
 				pos = pygame.mouse.get_pos()
-				row, col = Grid.get_clicked_pos(pos, ROWS, width)
-				if row < WIDTH and col < WIDTH:
+				row, col = Grid.get_clicked_pos(pos, rows, width)
+				if row < width and col < width:
 					spot = grid[row][col]
 					spot.reset()
 					if spot == start:
@@ -59,19 +55,21 @@ def main(win, width):
 
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE and start and end:
-					Grid.clear_old_path(win, grid, ROWS, width)
+					Grid.clear_old_path(win, grid, rows, width)
 					for row in grid:
 						for spot in row:
 							spot.update_neighbours(grid)
 					
-					Algorithm.a_star(lambda: Grid.draw_path(win, grid, ROWS, width), grid, start, end, heuristic)
+					Algorithm.a_star(lambda: Grid.draw_path(win, grid, rows, width), grid, start, end, heuristic)
 
 				if event.key == pygame.K_c:
 					start = None
 					end = None
-					grid = Grid.make_grid(ROWS, width)
+					grid = Grid.make_grid(rows, width)
 		ButtonHandler.draw_all_buttons(win,width)
 		pygame.display.update()
 	pygame.quit()
 
-main(WIN, WIDTH)
+WIDTH, ROWS, HEURISTIC = loadParameters()
+WIN = pygame.display.set_mode((WIDTH, WIDTH + 50))
+main(WIN, WIDTH, ROWS, HEURISTIC)

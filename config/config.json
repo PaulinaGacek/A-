@@ -1,5 +1,5 @@
 {
     "width": 400,
-    "algorithm": "astar",
-    "heuristics": "manhattan"
+    "rows": 50,
+    "heuristic": "manhattan "
 }
