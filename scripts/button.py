@@ -55,6 +55,8 @@ class ButtonHandler:
     b1 = None
     b2 = None
     b3 = None
+    btn_DFS = None
+    btn_BFS = None
     button_list = []
 
     @staticmethod
@@ -63,9 +65,14 @@ class ButtonHandler:
         ButtonHandler.b1 = Button("manhattan ",20, width+10)
         ButtonHandler.b2 = Button("euclidean",160, width+10)
         ButtonHandler.b3 = Button("diagonal", 290, width+10) 
+        ButtonHandler.btn_DFS = Button("  DFS  ", 100, width + 60)
+        ButtonHandler.btn_BFS = Button("  BFS  ", 220, width + 60)
+
         ButtonHandler.button_list.append(ButtonHandler.b1)
         ButtonHandler.button_list.append(ButtonHandler.b2)
         ButtonHandler.button_list.append(ButtonHandler.b3)
+        ButtonHandler.button_list.append(ButtonHandler.btn_DFS)
+        ButtonHandler.button_list.append(ButtonHandler.btn_BFS)
     
     @staticmethod
     def draw_all_buttons(win):

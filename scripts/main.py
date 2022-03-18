@@ -62,7 +62,10 @@ def main(win, width, rows, heuristic):
 						for spot in row:
 							spot.update_neighbours(grid)
 					
-					Algorithm.a_star(lambda: Grid.draw_path(win, grid, rows, width), grid, start, end, heuristic)
+					if heuristic == "  DFS  " or heuristic == "  BFS  ":
+						pass
+					else:
+						Algorithm.a_star(lambda: Grid.draw_path(win, grid, rows, width), grid, start, end, heuristic)
 
 				if event.key == pygame.K_c:
 					start = None
@@ -73,5 +76,5 @@ def main(win, width, rows, heuristic):
 	pygame.quit()
 
 WIDTH, ROWS, HEURISTIC = loadParameters()
-WIN = pygame.display.set_mode((WIDTH, WIDTH + 50))
+WIN = pygame.display.set_mode((WIDTH, WIDTH + 100))
 main(WIN, WIDTH, ROWS, HEURISTIC)
